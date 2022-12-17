@@ -169,7 +169,7 @@ function Update() {
     hit = player.Collide(objects[i]);
 
     if (hit) {
-      alert('Cat DIED!\nNice TRY! 🥺👉👈');
+      alert('You lose!\nBut it was a niceTry! 🥺👉👈');
       Stop();
       player.dead = true;
       break;
