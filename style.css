@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 body,
 html {
   width: 100%;
@@ -9,15 +11,85 @@ html {
 }
 
 .score {
-    position: absolute;
-    right: 0px;
-    color: aqua;
-  
-    border: 10px double rgb(11, 255, 223);
-    border-radius: 20px;
-    width: 200px;
-    height: 100px;
-  }
+  position: fixed;
+  color: aqua;
+  border-radius: 20px;
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.score-text {
+  margin-right: 20px;
+  font-family: "Press Start 2P", cursive;
+}
+
+/* Modal */
+/* Кнопка */
+.btn-modal {
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+  padding: 0 2rem;
+  color: aqua;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+}
+.btn-modal:hover {
+  color: rgb(13, 199, 199);
+}
+
+/* Модальное окно */
+#modal-block {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: aqua;
+  position: fixed;
+  top: 0;
+  left: -100vw;
+  width: 100vw;
+  height: 100vh;
+  transition: all 0.5s;
+  font-family: "Press Start 2P", cursive;
+  z-index: 9;
+}
+#modal-block:target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 0;
+}
+
+/* .close {
+  left: 0;
+} */
+/* Заголовкии текст */
+#modal-block h3 {
+  margin: 20px 0;
+  font-size: 1.7em;
+}
+#modal-block p {
+  width: 50%;
+  text-align: justify;
+}
+.block-inside {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+/* Кнопка закрыть */
+.close-block {
+  display: flex;
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  padding: 0.5em;
+  color: aqua;
+  text-decoration: none;
+  font-size: 3em;
+  box-sizing: border-box;
+}
 
   .wrapper {
     width: 100%;
@@ -27,7 +99,7 @@ html {
   .canvas {
     width: 100%;
     height: 100%;
-    background: rgb(11, 24, 51);
+    /* background: rgb(11, 24, 51); */
   
   }
 
