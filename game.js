@@ -1,4 +1,4 @@
-class Car {
+class Cat {
   constructor(image, x, y, isPlayer) {
     this.x = x;
     this.y = y;
@@ -17,5 +17,14 @@ class Car {
 
     this.image.src = image;
   }
-  
+
+  Update() {
+    if (!this.isPlayer) {
+      this.y += speed;
+    }
+
+    if (this.y > canvas.height + 50) {
+      this.dead = true;
+    }
+  }
 }
