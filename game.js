@@ -108,7 +108,68 @@ const player = new Cat(
   'images/car.png',
   canvas.width / 2,
   canvas.height / 2,
-  true,
+  true
 ); // Player's object
 
 Start();
+
+function Start() {
+  if (!player.dead) {
+    timer = setInterval(Update, UPDATE_TIME); // Обновление игры 60 раз в секунду
+  }
+}
+
+function Stop() {
+  clearInterval(timer); // Конец игры
+  timer = null;
+}
+
+function Update() {
+  if (RandomInteger(0, 10000) > 9700) {
+    // Generating new car
+    objects.push(
+      new Cat(
+        'images/car_red.png',
+        RandomInteger(30, canvas.width - 50),
+        RandomInteger(250, 400) * -1,
+        false,
+      ),
+    );
+  }
+
+  player.Update();
+
+  if (player.dead) {
+    alert('Crash!');
+    Stop();
+  }
+
+  let isDead = false;
+
+  for (let i = 0; i < objects.length; i += 1) {
+    objects[i].Update();
+
+    if (objects[i].dead) {
+      isDead = true;
+    }
+  }
+
+  if (isDead) {
+    objects.shift();
+  }
+
+  let hit = false;
+
+  for (let i = 0; i < objects.length; i += 1) {
+    hit = player.Collide(objects[i]);
+
+    if (hit) {
+      alert('Crash!');
+      Stop();
+      player.dead = true;
+      break;
+    }
+  }
+
+  Draw();
+}
