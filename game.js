@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const scale = 0.2; // Cars scale
 const speed = 3; // скорость метеоритов
 
@@ -81,3 +82,33 @@ class Cat {
     }
   }
 }
+
+let timer = null;
+const UPDATE_TIME = 1000 / 60;
+
+Resize();
+
+window.addEventListener('resize', Resize); // Изменить размер канваз с окном
+
+// Forbidding openning the context menu to make the game play better on mobile devices
+// Контекстное меню
+
+// canvas.addEventListener('contextmenu', function (e) {
+//   e.preventDefault();
+//   return false;
+// });
+
+// window.addEventListener('keydown', function (e) {
+//   KeyDown(e);
+// }); // Listenning for keyboard events
+
+const objects = []; // Объекты игры
+
+const player = new Cat(
+  'images/car.png',
+  canvas.width / 2,
+  canvas.height / 2,
+  true,
+); // Player's object
+
+Start();
