@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
 body,
 html {
   width: 100%;
@@ -9,15 +11,36 @@ html {
 }
 
 .score {
-    position: absolute;
-    right: 0px;
-    color: aqua;
-  
-    border: 10px double rgb(11, 255, 223);
-    border-radius: 20px;
-    width: 200px;
-    height: 100px;
-  }
+  position: fixed;
+  color: aqua;
+  border-radius: 20px;
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.score-text {
+  margin-right: 20px;
+  font-family: "Press Start 2P", cursive;
+}
+
+/* Modal */
+/* Кнопка */
+.btn-modal {
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+  padding: 0 2rem;
+  color: aqua;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+}
+.btn-modal:hover {
+  color: rgb(13, 199, 199);
+}
+
+
 
   .wrapper {
     width: 100%;
