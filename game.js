@@ -109,7 +109,7 @@ const player = new Cat(
   canvas.width / 2,
   canvas.height / 2,
   true
-); // Player's object
+); // Объек игрока
 
 Start();
 
@@ -132,8 +132,8 @@ function Update() {
         'images/car_red.png',
         RandomInteger(30, canvas.width - 50),
         RandomInteger(250, 400) * -1,
-        false,
-      ),
+        false
+      )
     );
   }
 
@@ -173,3 +173,30 @@ function Update() {
 
   Draw();
 }
+
+function Draw() {
+  // Работаем с графикой
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Чистим канваз
+
+  DrawCar(player);
+
+  for (let i = 0; i < objects.length; i += 1) {
+    DrawCar(objects[i]);
+  }
+}
+
+function DrawCar(car) {
+  ctx.drawImage(
+    car.image,
+    0,
+    0,
+    car.image.width,
+    car.image.height,
+    car.x,
+    car.y,
+    car.image.width * scale,
+    car.image.height * scale,
+  );
+}
+
+
