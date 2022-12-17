@@ -178,14 +178,14 @@ function Draw() {
   // Работаем с графикой
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Чистим канваз
 
-  DrawCar(player);
+  DrawCat(player);
 
   for (let i = 0; i < objects.length; i += 1) {
-    DrawCar(objects[i]);
+    DrawCat(objects[i]);
   }
 }
 
-function DrawCar(car) {
+function DrawCat(car) {
   ctx.drawImage(
     car.image,
     0,
@@ -199,4 +199,8 @@ function DrawCar(car) {
   );
 }
 
-
+// генерация астероидов
+function RandomInteger(min, max) {
+  const rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
