@@ -128,7 +128,7 @@ function Stop() {
 }
 
 function Update() {
-  if (RandomInteger(0, 10000) > 9700) {
+  if (RandomInteger(0, 1000) > 980) {
     //генерация астероидов
     objects.push(
       new Cat(
