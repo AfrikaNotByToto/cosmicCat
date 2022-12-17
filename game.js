@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const scale = 0.2; // Cars scale
@@ -108,7 +109,7 @@ const player = new Cat(
   'images/car.png',
   canvas.width / 2,
   canvas.height / 2,
-  true
+  true,
 ); // Объек игрока
 
 Start();
@@ -132,8 +133,8 @@ function Update() {
         'images/car_red.png',
         RandomInteger(30, canvas.width - 50),
         RandomInteger(250, 400) * -1,
-        false
-      )
+        false,
+      ),
     );
   }
 
@@ -197,6 +198,41 @@ function DrawCat(car) {
     car.image.width * scale,
     car.image.height * scale,
   );
+}
+
+// ключевое движение
+// eslint-disable-next-line no-unused-vars
+function KeyDown(e) {
+  switch (e.keyCode) {
+    case 37: // влево
+      player.Move('x', -speed);
+      break;
+
+    case 39: // вправо
+      player.Move('x', speed);
+      break;
+
+    case 38: // вверх
+      player.Move('y', -speed);
+      break;
+
+    case 40: // вниз
+      player.Move('y', speed);
+      break;
+
+    case 27: // выход
+      if (timer == null) {
+        Start();
+      } else {
+        Stop();
+      }
+      break;
+  }
+}
+
+function Resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
 // генерация астероидов
