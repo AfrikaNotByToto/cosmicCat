@@ -1,3 +1,5 @@
+const Cat = require('./Cat');
+
 /* eslint-disable no-restricted-globals */
 /* eslint-disable default-case */
 const canvas = document.getElementById('canvas');
@@ -190,17 +192,17 @@ function Draw() {
   }
 }
 
-function DrawCat(car) {
+function DrawCat(cat) {
   ctx.drawImage(
-    car.image,
+    cat.image,
     0,
     0,
-    car.image.width,
-    car.image.height,
-    car.x,
-    car.y,
-    car.image.width * scale,
-    car.image.height * scale
+    cat.image.width,
+    cat.image.height,
+    cat.x,
+    cat.y,
+    cat.image.width * scale,
+    cat.image.height * scale
   );
 }
 
