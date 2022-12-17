@@ -146,7 +146,6 @@ function Update() {
   player.Update();
 
   if (player.dead) {
-    alert('Cat DIED!!!Nice TRY!!');
     Stop();
   }
 
@@ -170,7 +169,7 @@ function Update() {
     hit = player.Collide(objects[i]);
 
     if (hit) {
-      alert('Crash!');
+      alert('Cat DIED!\nNice TRY! 🥺👉👈');
       Stop();
       player.dead = true;
       break;
