@@ -104,9 +104,9 @@ window.addEventListener('resize', Resize); // Изменить размер ка
 //   return false;
 // });
 
-// window.addEventListener('keydown', function (e) {
-//   KeyDown(e);
-// }); // Listenning for keyboard events
+window.addEventListener('keydown', function (e) {
+  KeyDown(e);
+}); // Отвечает за реакцию на кнопки
 
 const objects = []; // Объекты игры
 
@@ -146,7 +146,6 @@ function Update() {
   player.Update();
 
   if (player.dead) {
-    alert('Cat DIED!!!Nice TRY!!');
     Stop();
   }
 
@@ -170,7 +169,7 @@ function Update() {
     hit = player.Collide(objects[i]);
 
     if (hit) {
-      alert('Crash!');
+      alert('Cat DIED!\nNice TRY! 🥺👉👈');
       Stop();
       player.dead = true;
       break;
