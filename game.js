@@ -1,3 +1,7 @@
+const canvas = document.getElementById('canvas');
+const scale = 0.2; // Cars scale
+const speed = 3; // скорость метеоритов
+
 class Cat {
   constructor(image, x, y, isPlayer) {
     this.x = x;
@@ -26,5 +30,24 @@ class Cat {
     if (this.y > canvas.height + 50) {
       this.dead = true;
     }
+  }
+
+  Collide(cat) {
+    let hit = false;
+
+    if (
+      this.y < cat.y + cat.image.height * scale &&
+      this.y + this.image.height * scale > cat.y
+    ) {
+      //If there is collision by y
+      if (
+        this.x + this.image.width * scale > cat.x &&
+        this.x < cat.x + cat.image.width * scale
+      ) {
+        //If there is collision by x
+        hit = true;
+      }
+    }
+    return hit;
   }
 }
