@@ -5,6 +5,9 @@ const ctx = canvas.getContext('2d');
 const scale = 0.2; // Cars scale
 const speed = 3; // скорость метеоритов
 
+const open = document.getElementById('modal-block');
+const close = document.getElementById('close');
+
 class Cat {
   constructor(image, x, y, isPlayer) {
     this.x = x;
