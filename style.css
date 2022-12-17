@@ -40,7 +40,56 @@ html {
   color: rgb(13, 199, 199);
 }
 
+/* Модальное окно */
+#modal-block {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: aqua;
+  position: fixed;
+  top: 0;
+  left: -100vw;
+  width: 100vw;
+  height: 100vh;
+  transition: all 0.5s;
+  font-family: "Press Start 2P", cursive;
+  z-index: 9;
+}
+#modal-block:target {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  left: 0;
+}
 
+/* .close {
+  left: 0;
+} */
+/* Заголовкии текст */
+#modal-block h3 {
+  margin: 20px 0;
+  font-size: 1.7em;
+}
+#modal-block p {
+  width: 50%;
+  text-align: justify;
+}
+.block-inside {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+/* Кнопка закрыть */
+.close-block {
+  display: flex;
+  position: absolute;
+  top: 25%;
+  right: 25%;
+  padding: 0.5em;
+  color: aqua;
+  text-decoration: none;
+  font-size: 3em;
+  box-sizing: border-box;
+}
 
   .wrapper {
     width: 100%;
@@ -50,7 +99,7 @@ html {
   .canvas {
     width: 100%;
     height: 100%;
-    background: rgb(11, 24, 51);
+    /* background: rgb(11, 24, 51); */
   
   }
 
