@@ -104,9 +104,9 @@ window.addEventListener('resize', Resize); // Изменить размер ка
 //   return false;
 // });
 
-// window.addEventListener('keydown', function (e) {
-//   KeyDown(e);
-// }); // Listenning for keyboard events
+window.addEventListener('keydown', function (e) {
+  KeyDown(e);
+}); // Отвечает за реакцию на кнопки
 
 const objects = []; // Объекты игры
 
