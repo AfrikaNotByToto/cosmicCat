@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable default-case */
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
@@ -233,6 +234,10 @@ function KeyDown(e) {
       break;
   }
 }
+
+close.addEventListener('click', () => {
+  open.style.left = '-100"+ "vw';
+});
 
 function Resize() {
   canvas.width = window.innerWidth;
