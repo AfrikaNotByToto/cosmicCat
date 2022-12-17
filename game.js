@@ -33,6 +33,7 @@ class Cat {
       this.dead = true;
     }
   }
+  // столкновение объектов
 
   Collide(cat) {
     let hit = false;
@@ -106,7 +107,7 @@ window.addEventListener('resize', Resize); // Изменить размер ка
 const objects = []; // Объекты игры
 
 const player = new Cat(
-  'images/car.png',
+  'images/cat-l.gif',
   canvas.width / 2,
   canvas.height / 2,
   true,
@@ -127,10 +128,10 @@ function Stop() {
 
 function Update() {
   if (RandomInteger(0, 10000) > 9700) {
-    // Generating new car
+    //генерация астероидов
     objects.push(
       new Cat(
-        'images/car_red.png',
+        'images/meteor.gif',
         RandomInteger(30, canvas.width - 50),
         RandomInteger(250, 400) * -1,
         false,
@@ -141,7 +142,7 @@ function Update() {
   player.Update();
 
   if (player.dead) {
-    alert('Crash!');
+    alert('Cat DIED!!!Nice TRY!!');
     Stop();
   }
 
@@ -196,7 +197,7 @@ function DrawCat(car) {
     car.x,
     car.y,
     car.image.width * scale,
-    car.image.height * scale,
+    car.image.height * scale
   );
 }
 
