@@ -110,7 +110,7 @@ const player = new Cat(
   'images/cat-l.gif',
   canvas.width / 2,
   canvas.height / 2,
-  true,
+  true
 ); // Объек игрока
 
 Start();
@@ -134,8 +134,8 @@ function Update() {
         'images/meteor.gif',
         RandomInteger(30, canvas.width - 50),
         RandomInteger(250, 400) * -1,
-        false,
-      ),
+        false
+      )
     );
   }
 
@@ -206,19 +206,21 @@ function DrawCat(car) {
 function KeyDown(e) {
   switch (e.keyCode) {
     case 37: // влево
-      player.Move('x', -speed);
+      player.image.src = 'images/cat-l.gif';
+      player.Move('x', -speed - 20);
       break;
 
     case 39: // вправо
-      player.Move('x', speed);
+      player.image.src = 'images/cat-r.gif';
+      player.Move('x', speed + 20);
       break;
 
     case 38: // вверх
-      player.Move('y', -speed);
+      player.Move('y', -speed - 20);
       break;
 
     case 40: // вниз
-      player.Move('y', speed);
+      player.Move('y', speed + 20);
       break;
 
     case 27: // выход
@@ -226,6 +228,7 @@ function KeyDown(e) {
         Start();
       } else {
         Stop();
+        open.style.left = '0';
       }
       break;
   }
