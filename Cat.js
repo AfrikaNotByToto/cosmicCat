@@ -1,4 +1,7 @@
+/* eslint-disable operator-linebreak */
 const canvas = document.getElementById('canvas');
+const scale = 0.2; // Cars scale
+const speed = 3; // скорость метеоритов
 
 class Cat {
   constructor(image, x, y, isPlayer) {
@@ -12,7 +15,7 @@ class Cat {
 
     const obj = this;
 
-    // eslint-disable-next-line prefer-arrow-callback
+    // eslint-disable-next-line prefer-arrow-callback, func-names
     this.image.addEventListener('load', function () {
       obj.loaded = true;
     });
