@@ -8,3 +8,13 @@ html {
 
 }
 
+.score {
+    position: absolute;
+    right: 0px;
+    color: aqua;
+  
+    border: 10px double rgb(11, 255, 223);
+    border-radius: 20px;
+    width: 200px;
+    height: 100px;
+  }
