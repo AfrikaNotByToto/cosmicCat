@@ -1,46 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link href="stars.css" rel="stylesheet" />
+    <title>Cosmic Cat</title>
+  </head>
 
-<head>
-    <title>CosmicCat</title>
-    <link rel="stylesheet" href="style.css">
-	<meta charset="utf-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="HandheldFriendly" content="true" />
-</head>
+  <body>
+    <div class="main">
+      <!-- Звезды -->
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
 
-
-<body>
-    <div class = main>
-        <div class = 'wrapper'>
-            <div class = 'score'>
-              <a class="btn-modal" href="#modal-block">Menu</a>
-              <div class="score-text">Score: 100000</div>
-            </div>
-
-             <!-- Содержимое модального окна -->
-        <div id="modal-block">
-            <a class="close-block" id="close" href="#close-block">X</a>
-            <div class="block-inside">
-              <h3>Cosmic Cat</h3>
-              <p>Welcome to the Cosmic Cat World!</p> 
-              <p>My name is Kit-Kat and I want to return to my planet.</p>
-              <p>Can you help me?</p>
-              <h3>Sound</h3>
-            </div>
+      <!-- Меню -->
+      <div class="score-text">
+        <a class="btn-modal" href="#modal-block">Menu</a>
+        <p>Score:</p>
+        <input type="text" value="1" id="score" />
+        <!-- <input type="submit" value="stop" onclick="stop()" /> -->
+      </div>
+      <!-- Содержимое модального окна -->
+      <div id="modal-block">
+        <a class="close-block" id="close" href="#close-block">X</a>
+        <div class="block-inside">
+          <h3>Cosmic Cat</h3>
+          <p>Your mission is to survive as long as possible.</p>
+          <p>If you hit an asteroid you will die.</p>
+          <div class="keys">
+            <img src="./img/keys.png" />
+            <p>Move around with keys.</p>
           </div>
-
-            <div id="stars"></div>
-			<div id="stars2"></div>
-			<div id="stars3"></div>
-
-            <canvas width="0" height="0" class="canvas" id="canvas">Your browser does not support JavaScript and
-				HTML5!</canvas>
+          <h3>Sound</h3>
+          <!-- <audio controls style="width: 100%; max-width: 600px" autoplay>
+            <source src="./music/fun.mp3" type="audio/mp3" />
+            Тег audio не поддерживается вашим браузером.
+          </audio> -->
+          <!-- <audio src="./music/fun.mp3" autoplay="autoplay" loop="loop"></audio>
+          <p onclick="soundClick()">Кликни по этому тексту</p> -->
+          <div class="music">
+            <div id="musicPlay">On</div>
+            <div id="musicStop">Off</div>
+          </div>
         </div>
-    </div>
-    <script src="game.js"></script>
-</body>
+      </div>
 
+      <!-- Метеориты на css -->
+      <div class="snowflakes">
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+        <div class="snowflake">
+          <img src="./img/meteor.gif" />
+        </div>
+      </div>
+
+      <!-- Кошка -->
+      <div class="div" id="blo">
+        <div class="cat"><img src="./img/cat.gif" /></div>
+        <!-- Блок с разворотом кошки class scale -->
+        <!-- <div class="cat"><img src="cat.gif" class="scale" /></div> -->
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
 </html>
