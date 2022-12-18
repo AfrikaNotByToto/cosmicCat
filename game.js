@@ -1,3 +1,8 @@
+const catNode = document.querySelector('.div');
+const mainNode = document.querySelector('.main');
+const snowflakeNodes = Array.from(document.querySelectorAll('.snowflake'));
+const menuGameNode = document.querySelector('#modal-block');
+
 class Cat {
   x = 0;
 
@@ -212,6 +217,10 @@ class Cat {
     }
   }
 
+  // вызывается при срабатывании события keyup и используется
+  // для обновления массива keyboardKeysPressed, чтобы отразить клавиши,
+  // которые больше не нажимаются.
+
   keyUp = (e) => {
     const keypress = e.key;
     this.keyboardKeysPressed = this.keyboardKeysPressed.filter(
@@ -230,10 +239,5 @@ class Cat {
     this.scoreNode.value = parseInt(this.scoreNode.value) + 1;
   };
 }
-
-const catNode = document.querySelector('.div');
-const mainNode = document.querySelector('.main');
-const snowflakeNodes = Array.from(document.querySelectorAll('.snowflake'));
-const menuGameNode = document.querySelector('#modal-block');
-
-new Cat(catNode, mainNode, snowflakeNodes, menuGameNode);
+// создание экземпляра класса Кэт
+new Cat(catNode, mainNode, snowflakeNodes, menuGameNode); 
