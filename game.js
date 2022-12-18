@@ -1,8 +1,3 @@
-const catNode = document.querySelector('.div');
-const mainNode = document.querySelector('.main');
-const snowflakeNodes = Array.from(document.querySelectorAll('.snowflake'));
-const menuGameNode = document.querySelector('#modal-block');
-
 class Cat {
   x = 0;
 
@@ -116,8 +111,10 @@ class Cat {
     this.keyboardKeysPressed = this.keyboardKeysPressed.filter(
       (item, i, arr) => arr.indexOf(item) === i,
     );
-    // менюшка по esc
+    // менюшка по esc у тани не работает
     if (keypress === 'Escape') {
+    //   this.stop();
+    // classList для управления списком классов.
       this.menuGameNode.classList.toggle('active');
     }
     // стандартное движение
@@ -232,6 +229,10 @@ class Cat {
   start() {
     window.timerId = window.setInterval(this.timer, 100);
   }
+
+  // stop() { // функция остановки таймера
+  //   window.clearInterval(window.TimerId);
+  // }
   // работа с idScore, функция изменяет значение инпута в Таймере в браузере
 
   timer = () => {
@@ -239,5 +240,10 @@ class Cat {
     this.scoreNode.value = parseInt(this.scoreNode.value) + 1;
   };
 }
+
+const catNode = document.querySelector('.div');
+const mainNode = document.querySelector('.main');
+const snowflakeNodes = Array.from(document.querySelectorAll('.snowflake'));
+const menuGameNode = document.querySelector('#modal-block');
 // создание экземпляра класса Кэт
 new Cat(catNode, mainNode, snowflakeNodes, menuGameNode); 
