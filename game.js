@@ -1,255 +1,243 @@
-const Cat = require('./Cat');
-
-/* eslint-disable no-restricted-globals */
-/* eslint-disable default-case */
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const scale = 0.2; // Cars scale
-const speed = 3; // скорость метеоритов
-
-const open = document.getElementById('modal-block');
-const close = document.getElementById('close');
+const catNode = document.querySelector('.div');
+const mainNode = document.querySelector('.main');
+const snowflakeNodes = Array.from(document.querySelectorAll('.snowflake'));
+const menuGameNode = document.querySelector('#modal-block');
 
 class Cat {
-  constructor(image, x, y, isPlayer) {
-    this.x = x;
-    this.y = y;
-    this.loaded = false;
-    this.dead = false;
-    this.isPlayer = isPlayer;
+  x = 0;
 
-    this.image = new Image();
+  y = 0;
+  // картинка нашего кота ГЛАВНАЯ
 
-    const obj = this;
+  catNode = null;
 
-    // eslint-disable-next-line prefer-arrow-callback
-    this.image.addEventListener('load', function () {
-      obj.loaded = true;
-    });
+  parentNode = null;
 
-    this.image.src = image;
-  }
+  keyboardKeysPressed = [];
 
-  Update() {
-    if (!this.isPlayer) {
-      this.y += speed;
+  scoreNode = document.querySelector('#score');
+
+  snowflakeNodes = [];
+
+  menuGameNode = null;
+
+  constructor(catNode, parentNode, snowflakeNodes, menuGameNode) {
+    this.catNode = catNode;
+    this.parentNode = parentNode;
+    this.snowflakeNodes = snowflakeNodes;
+    this.menuGameNode = menuGameNode;
+
+    if (this.catNode === null) {
+      throw new Error('catNode не существует');
     }
 
-    if (this.y > canvas.height + 50) {
-      this.dead = true;
+    if (this.parentNode === null) {
+      throw new Error('parentNode не существует');
+    }
+
+    if (this.snowflakeNodes.length === 0) {
+      throw new Error('Астероиды не переданы');
+    }
+
+    this.onInit();
+  }
+  // функция для иницализации и запуска игры(таймер, центровка кота и слушатель для клавиш)
+
+  onInit() {
+    this.addEventListeners();
+    this.centeringCat();
+    this.start();
+  }
+  // центровка кота, его изначальное положение
+
+  centeringCat() {
+    // getBoundingClientRect() - новую открыли для себя штуку из слушателя,
+    // которая предоставляет инфу о позиции объекта и его размере в окне
+    const parentRect = this.parentNode.getBoundingClientRect();
+
+    // Вычисляем середину родительского элементас котом img по оси X
+    this.x = parentRect.left + (parentRect.width - this.catNode.offsetWidth) / 2;
+
+    // Вычисляем середину родительского элемента с котом img по оси Y
+    this.y = parentRect.top + (parentRect.height - this.catNode.offsetHeight) / 2;
+
+    // Устанавливаем кошке середину родительского элемента как начальные координаты
+    this.catNode.style.left = `${this.x}px`;
+    this.catNode.style.top = `${this.y}px`;
+  }
+  // слушатель на кнопки + запускает музыку
+
+  addEventListeners() {
+    document.addEventListener('keydown', this.moveLogic);
+    document.addEventListener('keyup', this.keyUp);
+    this.initMusic();
+  }
+  // вкл/выкл музыки
+
+  initMusic() {
+    const music = new Audio();
+    music.src = './music/fun.mp3';
+    music.autoplay = true;
+
+    document.querySelector('#musicPlay').onclick = function () {
+      music.play();
+      music.loop = true;
+    };
+    document.querySelector('#musicStop').onclick = function () {
+      music.pause();
+    };
+  }
+  // проверка на столкновение
+
+  checkForCollision() {
+    for (let i = 0; i < this.snowflakeNodes.length; i += 1) {
+      // отпредляет размемы метеорита и котика
+      const snowflakeRect = this.snowflakeNodes[i].getBoundingClientRect();
+      const catRect = this.catNode.getBoundingClientRect();
+      // проверка на местоположения каждого элемента
+      if (
+        catRect.x < snowflakeRect.x + snowflakeRect.width / 2 &&
+        catRect.x + catRect.width / 2 > snowflakeRect.x &&
+        catRect.y < snowflakeRect.y + snowflakeRect.height / 2 &&
+        catRect.height / 2 + catRect.y > snowflakeRect.y
+      ) {
+        alert('You lose!\nBut it was a niceTry!🥺👉👈');
+        // перезагружает URL наподобие кнопке обновления браузера
+        location.reload();
+      }
     }
   }
-  // столкновение объектов
+  // основная функция движения
 
-  Collide(cat) {
-    let hit = false;
+  moveLogic = (evt) => {
+    const keypress = evt.key;
+
+    this.keyboardKeysPressed.push(keypress);
+    this.keyboardKeysPressed = this.keyboardKeysPressed.filter(
+      (item, i, arr) => arr.indexOf(item) === i,
+    );
+    // менюшка по esc
+    if (keypress === 'Escape') {
+      this.menuGameNode.classList.toggle('active');
+    }
+    // стандартное движение
+    if (keypress === 'ArrowUp') {
+      this.moveY(-40);
+    }
+    if (keypress === 'ArrowDown') {
+      this.moveY(40);
+    }
+    if (keypress === 'ArrowLeft') {
+      this.moveX(-40);
+    }
+    if (keypress === 'ArrowRight') {
+      this.moveX(40);
+    }
+    // движение по диагонали
+    if (
+      this.keyboardKeysPressed.includes('ArrowLeft') &&
+      this.keyboardKeysPressed.includes('ArrowUp')
+    ) {
+      this.moveX(-30);
+      this.moveY(-30);
+    }
 
     if (
-      this.y < cat.y + cat.image.height * scale &&
-      this.y + this.image.height * scale > cat.y
+      this.keyboardKeysPressed.includes('ArrowRight') &&
+      this.keyboardKeysPressed.includes('ArrowUp')
     ) {
-      // If there is collision by y
-      if (
-        this.x + this.image.width * scale > cat.x &&
-        this.x < cat.x + cat.image.width * scale
-      ) {
-        // If there is collision by x
-        hit = true;
-      }
+      this.moveX(30);
+      this.moveY(-30);
     }
-    return hit;
-  }
 
-  Move(v, d) {
-    if (v === 'x') {
-      // Движение x
-      // eslint-disable-next-line no-param-reassign
-      d *= 2;
+    if (
+      this.keyboardKeysPressed.includes('ArrowLeft') &&
+      this.keyboardKeysPressed.includes('ArrowDown')
+    ) {
+      this.moveX(-30);
+      this.moveY(30);
+    }
 
-      this.x += d; // Смена позиции
+    if (
+      this.keyboardKeysPressed.includes('ArrowRight') &&
+      this.keyboardKeysPressed.includes('ArrowDown')
+    ) {
+      this.moveX(30);
+      this.moveY(30);
+    }
+    // проверка на столкновение
+    this.checkForCollision();
+  };
+  // смена картинки котика лево/право
 
-      // откат изменений, если машина ушла за пределы экрана
-      if (this.x + this.image.width * scale > canvas.width) {
-        this.x -= d;
-      }
+  moveX(shiftX) {
+    const lastX = this.x;
 
-      if (this.x < 0) {
-        this.x = 0;
-      }
-      // Движение y
+    this.x = this.x + shiftX;
+
+    if (this.x < 0) {
+      this.x = 0;
+    }
+    // offsetWidth содержит полную ширину элемента
+    if (this.x > this.parentNode.offsetWidth - this.catNode.offsetWidth) {
+      this.x = this.parentNode.offsetWidth - this.catNode.offsetWidth;
+    }
+
+    const nextX = this.x;
+
+    if (nextX > lastX) {
+      this.changeImageCat('right');
     } else {
-      this.y += d;
+      this.changeImageCat('left');
+    }
 
-      if (this.y + this.image.height * scale > canvas.height) {
-        this.y -= d;
-      }
+    this.catNode.style.left = this.x + 'px';
+  }
 
-      if (this.y < 0) {
-        this.y = 0;
-      }
+  moveY(shiftY) {
+    this.y += shiftY;
+    if (this.y < 0) {
+      this.y = 0;
+    }
+    // offsetWidth содержит полную ширину элемента
+    if (this.y > this.parentNode.offsetHeight - this.catNode.offsetHeight) {
+      this.y = this.parentNode.offsetHeight - this.catNode.offsetHeight;
+    }
+
+    this.catNode.style.top = this.y + 'px';
+  }
+
+  changeImageCat(direction) {
+    const catImageNode = this.catNode.querySelector('img');
+
+    if (direction === 'left') {
+      catImageNode.src = './img/cat.gif';
+    } else if (direction === 'right') {
+      catImageNode.src = './img/cat-r.gif';
     }
   }
-}
 
-let timer = null;
-const UPDATE_TIME = 1000 / 60;
+  // вызывается при срабатывании события keyup и используется
+  // для обновления массива keyboardKeysPressed, чтобы отразить клавиши,
+  // которые больше не нажимаются.
 
-Resize();
-
-window.addEventListener('resize', Resize); // Изменить размер канваз с окном
-
-// Forbidding openning the context menu to make the game play better on mobile devices
-// Контекстное меню
-
-// canvas.addEventListener('contextmenu', function (e) {
-//   e.preventDefault();
-//   return false;
-// });
-
-window.addEventListener('keydown', function (e) {
-  KeyDown(e);
-}); // Отвечает за реакцию на кнопки
-
-const objects = []; // Объекты игры
-
-const player = new Cat(
-  'images/cat-l.gif',
-  canvas.width / 2,
-  canvas.height / 2,
-  true
-); // Объек игрока
-
-Start();
-
-function Start() {
-  if (!player.dead) {
-    timer = setInterval(Update, UPDATE_TIME); // Обновление игры 60 раз в секунду
-  }
-}
-
-function Stop() {
-  clearInterval(timer); // Конец игры
-  timer = null;
-}
-
-function Update() {
-  if (RandomInteger(0, 1000) > 980) {
-    //генерация астероидов
-    objects.push(
-      new Cat(
-        'images/meteor.gif',
-        RandomInteger(30, canvas.width - 50),
-        RandomInteger(250, 400) * -1,
-        false
-      )
+  keyUp = (e) => {
+    const keypress = e.key;
+    this.keyboardKeysPressed = this.keyboardKeysPressed.filter(
+      (el) => el !== keypress,
     );
+  };
+
+  // Таймер начинает отсчет, когда начинается игра
+  start() {
+    window.timerId = window.setInterval(this.timer, 100);
   }
+  // работа с idScore, функция изменяет значение инпута в Таймере в браузере
 
-  player.Update();
-
-  if (player.dead) {
-    Stop();
-  }
-
-  let isDead = false;
-
-  for (let i = 0; i < objects.length; i += 1) {
-    objects[i].Update();
-
-    if (objects[i].dead) {
-      isDead = true;
-    }
-  }
-
-  if (isDead) {
-    objects.shift();
-  }
-
-  let hit = false;
-
-  for (let i = 0; i < objects.length; i += 1) {
-    hit = player.Collide(objects[i]);
-
-    if (hit) {
-      alert('You lose!\nBut it was a niceTry! 🥺👉👈');
-      Stop();
-      player.dead = true;
-      break;
-    }
-  }
-
-  Draw();
+  timer = () => {
+    this.checkForCollision();
+    this.scoreNode.value = parseInt(this.scoreNode.value) + 1;
+  };
 }
-
-function Draw() {
-  // Работаем с графикой
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Чистим канваз
-
-  DrawCat(player);
-
-  for (let i = 0; i < objects.length; i += 1) {
-    DrawCat(objects[i]);
-  }
-}
-
-function DrawCat(cat) {
-  ctx.drawImage(
-    cat.image,
-    0,
-    0,
-    cat.image.width,
-    cat.image.height,
-    cat.x,
-    cat.y,
-    cat.image.width * scale,
-    cat.image.height * scale
-  );
-}
-
-// ключевое движение
-// eslint-disable-next-line no-unused-vars
-function KeyDown(e) {
-  switch (e.keyCode) {
-    case 37: // влево
-      player.image.src = 'images/cat-l.gif';
-      player.Move('x', -speed - 20);
-      break;
-
-    case 39: // вправо
-      player.image.src = 'images/cat-r.gif';
-      player.Move('x', speed + 20);
-      break;
-
-    case 38: // вверх
-      player.Move('y', -speed - 20);
-      break;
-
-    case 40: // вниз
-      player.Move('y', speed + 20);
-      break;
-
-    case 27: // выход
-      if (timer == null) {
-        Start();
-      } else {
-        Stop();
-        open.style.left = '0';
-      }
-      break;
-  }
-}
-
-close.addEventListener('click', () => {
-  open.style.left = '-100"+ "vw';
-});
-
-function Resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-// генерация астероидов
-function RandomInteger(min, max) {
-  const rand = min - 0.5 + Math.random() * (max - min + 1);
-  return Math.round(rand);
-}
+// создание экземпляра класса Кэт
+new Cat(catNode, mainNode, snowflakeNodes, menuGameNode); 
